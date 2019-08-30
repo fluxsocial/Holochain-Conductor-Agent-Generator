@@ -1,58 +1,35 @@
 use std::{fs, str};
 
-use crate::get_current_config;
+use crate::{get_current_config, AGENT_STRING, INSTANCE_STRING, INTERFACE_STRING};
 
-pub fn write_agent(key_dir: &str) -> Result<&'static str, &'static str>{
-    let pub_address = key_dir.clone().split("/").collect::<Vec<&str>>()[6];
-    let agent_string = format!("
-[[agents]]
-id = \"{}\"
-name = \"{}\"
-keystore_file = \"{}\"
-public_address = \"{}\"
-", pub_address, pub_address, key_dir, pub_address);
+pub fn write_agent(key_dir: &str, dna_ids: &Vec<&str>) -> Result<(), &'static str>{
+    let pub_address_split = key_dir.split("/").collect::<Vec<&str>>();
+    let pub_address = pub_address_split[pub_address_split.len()-1];
 
-    let junto_instance_string = format!("
-[[instances]]
-agent = \"{}\"
-dna = \"junto-app\"
-id = \"junto-app-{}\"
-[instances.storage]
-path = \"/holochain/junto/storage/{}\"
-type = \"file\"
-", pub_address, pub_address, pub_address);
-
-    let deepkey_instance_string = format!("
-#[[instances]]
-#agent = \"{}\"
-#dna = \"deepkey\"
-#id = \"deepkey-{}\"
-#[instances.storage]
-#path = \"/holochain/deepkey/storage/{}\"
-#type = \"file\"
-", pub_address, pub_address, pub_address);
-    
+    let agent_string = format!(AGENT_STRING!(), pub_address, pub_address, key_dir, pub_address);
     let current_config = get_current_config();
-    let new_config = format!("{}\n{}\n{}\n{}\n", current_config, agent_string, junto_instance_string, deepkey_instance_string);
+    let new_config = format!("{}\n{}\n", current_config, agent_string);
     fs::write("./config.toml", new_config).expect("Unable to write file");
-    Ok("Writing agent complete")
+
+    for dna_id in dna_ids {
+        let instance_string = format!(INSTANCE_STRING!(), pub_address, dna_id, dna_id, pub_address, dna_id, pub_address);
+        let current_config = get_current_config();
+        let new_config = format!("{}\n{}\n", current_config, instance_string);
+        fs::write("./config.toml", new_config).expect("Unable to write file");
+    };
+    
+    Ok(())
 }
 
-pub fn write_interface(key_dir: &str) -> Result<&'static str, &'static str> {
-    let pub_address = key_dir.clone().split("/").collect::<Vec<&str>>()[6];
-    let junto_interface_instance_string = format!("
-\t[[interfaces.instances]]
-\tid = \"junto-app-{}\"
-", pub_address);
+pub fn write_interface(key_dir: &str, dna_ids: &Vec<&str>) -> Result<(), &'static str> {
+    let pub_address_split = key_dir.split("/").collect::<Vec<&str>>();
+    let pub_address = pub_address_split[pub_address_split.len()-1];
 
-    let deepkey_interface_instance_string = format!("
-#\t[[interfaces.instances]]
-#\tid = \"deepkey-{}\"
-", pub_address);
-
-    let current_config = get_current_config();
-    let new_config = format!("{}\n{}\n{}\n", current_config, junto_interface_instance_string, deepkey_interface_instance_string);
-    fs::write("./config.toml", new_config).expect("Unable to write file");
-
-    Ok("Create interface complete")
+    for dna_id in dna_ids{
+        let interface_string = format!(INTERFACE_STRING!(), dna_id, pub_address);
+        let current_config = get_current_config();
+        let new_config = format!("{}\n{}", current_config, interface_string);
+        fs::write("./config.toml", new_config).expect("Unable to write file");
+    };
+    Ok(())
 }

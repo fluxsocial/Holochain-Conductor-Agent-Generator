@@ -110,7 +110,7 @@ fn main(){
 
     for (i, dna_id) in dna_ids.iter().enumerate(){
         let current_config = get_current_config();
-        fs::write("./config.toml", format!("{}\n{}", current_config, format!(DNA_STRING!(), dna_paths[i], dna_id, dna_hashs[i]))).expect("Unable to write file");
+        fs::write("./config.toml", format!("{}\n{}\n", current_config, format!(DNA_STRING!(), dna_paths[i], dna_id, dna_hashs[i]))).expect("Unable to write file");
     };
 
     let mut current_keys: Vec<_> = fs::read_dir(key_dir).unwrap().map(|res| res.unwrap().path()).collect();
