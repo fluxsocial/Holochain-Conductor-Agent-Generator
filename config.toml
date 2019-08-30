@@ -1,0 +1,79 @@
+persistence_dir = "/holochain/persistence"
+#signing_service_uri = "http://localhost:8888"
+
+[network]
+type="n3h"
+n3h_persistence_path = "/holochain/n3h"
+n3h_log_level = 't'
+#bootstrap_nodes = []
+#n3h_mode = "REAL"
+#Agent for hosting applications
+[[dnas]]
+file = "test_path"
+id = "test"
+hash = "hash"
+[[dnas]]
+file = "test_path2"
+id = "test2"
+hash = "hash2"
+[[agents]]
+id = "HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+name = "HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+keystore_file = "/Users/Josh/Library/Preferences/org.holochain.holochain/keys/HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+public_address = "HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+
+[[instances]]
+agent = "HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+dna = "test"
+id = "test-HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+[instances.storage]
+path = "/holochain/test/storage/HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+type = "file"
+
+[[instances]]
+agent = "HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+dna = "test2"
+id = "test2-HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+[instances.storage]
+path = "/holochain/test2/storage/HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+type = "file"
+
+[[agents]]
+id = "HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+name = "HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+keystore_file = "/Users/Josh/Library/Preferences/org.holochain.holochain/keys/HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+public_address = "HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+
+[[instances]]
+agent = "HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+dna = "test"
+id = "test-HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+[instances.storage]
+path = "/holochain/test/storage/HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+type = "file"
+
+[[instances]]
+agent = "HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+dna = "test2"
+id = "test2-HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+[instances.storage]
+path = "/holochain/test2/storage/HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+type = "file"
+
+
+[[interfaces]]
+id = "http interface"
+admin = true
+
+	[[interfaces.instances]]
+	id = "test-HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+	[[interfaces.instances]]
+	id = "test2-HcSCj85eQQuIryp34tNIWXxIQ8e85j8eiUnK3w6YqEr4nxxq657W3uSdMndSaor"
+	[[interfaces.instances]]
+	id = "test-HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+	[[interfaces.instances]]
+	id = "test2-HcScJQZmDhAcddczvkaSk3z7IcBqx58cjIEeFkygD87ohexobUibEjt3P6fkd5z"
+
+	[interfaces.driver]
+	type = "http"
+	port = 4000
