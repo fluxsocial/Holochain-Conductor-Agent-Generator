@@ -7,7 +7,7 @@ pub fn create_persistent_directories(path: &str, key_dir: &str, number_of_agents
     let persistant_path = format!("{}/{}/storage", path, dna_id);
 
     let persistent_directories: Vec<_> = fs::read_dir(&persistant_path).unwrap().map(|res| res.unwrap().path()).collect();
-    println!("Current number of persistent directories for agents: {}", persistent_directories.len());
+    println!("Current number of persistent directories for agents: {}\n", persistent_directories.len());
 
     if persistent_directories.len() < *number_of_agents{
         for current_key in current_keys{

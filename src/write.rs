@@ -2,7 +2,7 @@ use std::{fs, str};
 
 use crate::{get_current_config, AGENT_STRING, INSTANCE_STRING, INTERFACE_STRING};
 
-pub fn write_agent(key_dir: &str, dna_ids: &Vec<&str>) -> Result<(), &'static str>{
+pub fn write_agent(path: &str, key_dir: &str, dna_ids: &Vec<&str>) -> Result<(), &'static str>{
     let pub_address_split = key_dir.split("/").collect::<Vec<&str>>();
     let pub_address = pub_address_split[pub_address_split.len()-1];
 
@@ -12,7 +12,7 @@ pub fn write_agent(key_dir: &str, dna_ids: &Vec<&str>) -> Result<(), &'static st
     fs::write("./config.toml", new_config).expect("Unable to write file");
 
     for dna_id in dna_ids {
-        let instance_string = format!(INSTANCE_STRING!(), pub_address, dna_id, dna_id, pub_address, dna_id, pub_address);
+        let instance_string = format!(INSTANCE_STRING!(), pub_address, dna_id, dna_id, pub_address, path, dna_id, pub_address);
         let current_config = get_current_config();
         let new_config = format!("{}\n{}\n", current_config, instance_string);
         fs::write("./config.toml", new_config).expect("Unable to write file");

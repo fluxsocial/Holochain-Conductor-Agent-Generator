@@ -104,7 +104,7 @@ fn main(){
         create::create_base_persistent_directory(path, dna_id).unwrap();
         create::create_persistent_directories(path, key_dir.as_str(), &number_of_agents, dna_id);
     };
-    println!("All persistent directories created\n");
+    println!("\nAll persistent directories created\n");
 
     fs::write("./config.toml", format!(GENERAL_CONDUCTOR_DATA!(), path, path)).expect("Unable to write file");
 
@@ -117,7 +117,7 @@ fn main(){
     current_keys = current_keys[0..number_of_agents].to_vec();
 
     for key_dir in current_keys.clone(){
-        write::write_agent(key_dir.to_str().unwrap(), &dna_ids).unwrap();
+        write::write_agent(path, key_dir.to_str().unwrap(), &dna_ids).unwrap();
     };
 
     let current_config = get_current_config();

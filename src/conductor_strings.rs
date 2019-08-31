@@ -3,10 +3,10 @@ macro_rules! GENERAL_CONDUCTOR_DATA { () => {
 r#"persistence_dir = "{}/persistence"
 #signing_service_uri = "http://localhost:8888"
 
-[network]
-type="n3h"
-n3h_persistence_path = "{}/n3h"
-n3h_log_level = 't'
+#[network]
+#type="n3h"
+#n3h_persistence_path = "{}/n3h"
+#n3h_log_level = 't'
 #bootstrap_nodes = []
 #n3h_mode = "REAL"
 #Agent for hosting applications"#
@@ -36,7 +36,7 @@ agent = "{}"
 dna = "{}"
 id = "{}-{}"
 [instances.storage]
-path = "/holochain/{}/storage/{}"
+path = "{}/{}/storage/{}"
 type = "file""# 
 }; }
 
