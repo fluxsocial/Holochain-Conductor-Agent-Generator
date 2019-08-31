@@ -19,13 +19,12 @@ pub fn get_home_dir() -> String {
 
 pub fn get_key_dir() -> Result<String, ()> {
     match os_info::get().os_type(){
-        os_info::Type::Linux => {
-            Ok(format!("{}/.config/holochain/keys", get_home_dir()))
-        },
         os_info::Type::Macos => {
             Ok(format!("{}/Library/Preferences/org.holochain.holochain/keys", get_home_dir()))
         },
-        _ => Err(())
+        _ => {
+            Ok(format!("{}/.config/holochain/keys", get_home_dir()))
+        }
     }
 }
 
