@@ -76,16 +76,17 @@ fn main(){
     let dna_hashs: Vec<_> = matches.values_of("dna_hashs").unwrap().collect();
     println!("Hashes: {:?}", dna_hashs);
     let key_dir = get_key_dir().unwrap();
-    println!("Holochain key directory: {}", key_dir);
+    println!("Holochain key directory: {}\n", key_dir);
 
     create::create_core_paths(path).unwrap();
 
     let current_keys: Vec<_> = fs::read_dir(key_dir.as_str()).unwrap().map(|res| res.unwrap().path()).collect();
     let number_of_keys = current_keys.len();
     println!("Attempting to create: {} agents", number_of_agents);
-    println!("Current number of generated keys: {}", number_of_keys);
+    println!("Current number of generated agent keys: {}\n", number_of_keys);
     if number_of_keys < number_of_agents{
         for _n in 0..number_of_agents-number_of_keys{
+            println!("Attempting to create agent");
             let command = Command::new("hc")
                                         .arg("keygen")
                                         .arg("--nullpass")
@@ -97,13 +98,13 @@ fn main(){
             println!("Created agent keys with outputs: {}", utf8_out);
         }
     };
-    println!("\nAll agent keys have been generated\n\n");
+    println!("\nAll agent keys have been generated\n");
 
     for dna_id in &dna_ids {
         create::create_base_persistent_directory(path, dna_id).unwrap();
         create::create_persistent_directories(path, key_dir.as_str(), &number_of_agents, dna_id);
     };
-    println!("All persistent directories created");
+    println!("All persistent directories created\n");
 
     fs::write("./config.toml", format!(GENERAL_CONDUCTOR_DATA!(), path, path)).expect("Unable to write file");
 
